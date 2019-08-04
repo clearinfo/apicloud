@@ -29,11 +29,6 @@
             font-size: 20px;
         }
 
-        .flex-1 {
-            -webkit-box-flex: 1;
-            -webkit-flex: 1;
-        }
-
         footer {
             height: 30px;
             width: 100%;
@@ -46,14 +41,18 @@
 </head>
 
 <body class="wrap">
-    <header>APICloud</header>
-    <section class="flex-1">
+    <header>信息系统项目管理</header>
+    <footer>连昌宫 &copy;<span id="year"></span></footer>
 
-    </section>
-    <footer>Copyright &copy;<span id="year"></span></footer>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript" src="./script/SHA1.js"></script>
 <script type="text/javascript">
+//var appKey = SHA1（应用ID + 'UZ' + 应用KEY +'UZ' + 当前时间毫秒数）+ '.' +当前时间毫秒数
+var now = Date.now();
+var appID="A6018338664263";
+var myKey="243634D7-F3DC-F027-2AAA-2C2691768DC6";
+var appKey = SHA1("A6018338664263"+"UZ"+"243634D7-F3DC-F027-2AAA-2C2691768DC6"+"UZ"+now)+"."+now
     apiready = function() {
         //输出Log，Log将显示在APICloud Studio控制台
         console.log("Hello World! Hello APICloud!");
@@ -75,15 +74,19 @@
             rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
                 marginTop: headerH, // main页面距离win顶部的高度
                 marginBottom: footerH, // main页面距离win底部的高度
-                w: 'auto' // main页面的宽度 自适应屏幕宽度
+                w: 'auto', // main页面的宽度 自适应屏幕宽度
+                h:'auto'
             }
         });
 
         // 获取当前年份时间，并加载显示到页面
         var year = $api.byId('year');
+
         year.innerHTML = new Date().getFullYear();
+
     };
 
+  console.log(appKey,'getClassList宋显')
 </script>
 
 </html>

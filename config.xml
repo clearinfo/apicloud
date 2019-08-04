@@ -1,31 +1,167 @@
- <widget id="A6018338664263"  version="0.0.1">
-    <name>连昌宫</name>
-    <description>
-        Example For APICloud.
-    </description>
-    <author email="developer@apicloud.com" href="http://www.apicloud.com">
-        Developer
-    </author>
-    <content src="index.html" />
-    <access origin="*" />
-    <preference name="pageBounce" value="false"/>
-	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
-	<preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
-	<preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
-	<preference name="hScrollBarEnabled" value="false"/>
-	<preference name="vScrollBarEnabled" value="false"/>
-	<preference name="autoLaunch" value="true"/>
-	<preference name="fullScreen" value="false"/>
-	<preference name="autoUpdate" value="true" />
-	<preference name="smartUpdate" value="false" />
-	<preference name="debug" value="true"/>
-	<preference name="statusBarAppearance" value="true"/>
-	<permission name="readPhoneState" />
-	<permission name="camera" />
-	<permission name="record" />
-	<permission name="location" />
-	<permission name="fileSystem" />
-	<permission name="internet" />
-	<permission name="bootCompleted" />
-	<permission name="hardware" />
-</widget>
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+
+    <script type="text/javascript" src="../script/vue.js"></script>
+
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/SHA1.js"></script>
+
+
+    <style>
+        label {
+            margin: 10px;
+            font-size: 24px;
+        }
+
+        ul {
+            margin-bottom: 10px;
+        }
+
+        ul li {
+            margin: 5px 10px;
+            padding: 5px;
+            color: #000;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+  <div id="app">
+    <p v-show="status">{{msg}}</p>
+    <ul class="aui-list aui-list-in">
+        <li class="aui-list-header">
+            目录
+        </li>
+        <li class="aui-list-item" v-for="(item,index) in dataList" :key="index">
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-title">
+                  <span>{{index}}</span><span>{{item.classname}}</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+  </div>
+
+
+    <div id="application"></div>
+    <div id='sys-info'>测试页面</div>
+
+    <footer class="aui-bar aui-bar-tab">
+        <div class="aui-bar-tab-item aui-active" tapmode>
+            <i class="aui-iconfont aui-icon-home"></i>
+            <div class="aui-bar-tab-label">首页</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode>
+            <i class="aui-iconfont aui-icon-star"></i>
+            <div class="aui-bar-tab-label">收藏</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode>
+            <div class="aui-badge">99</div>
+            <i class="aui-iconfont aui-icon-cart"></i>
+            <div class="aui-bar-tab-label">购物车</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode>
+            <div class="aui-dot"></div>
+            <i class="aui-iconfont aui-icon-my"></i>
+            <div class="aui-bar-tab-label">我的</div>
+        </div>
+    </footer>
+</body>
+<script type="text/javascript">
+var now = Date.now();
+var appID="A6018338664263";
+var myKey="243634D7-F3DC-F027-2AAA-2C2691768DC6";
+var appKey = SHA1("A6018338664263"+"UZ"+"243634D7-F3DC-F027-2AAA-2C2691768DC6"+"UZ"+now)+"."+now;
+  apiready = function() {
+    //application;//加载vue对象
+    var ver = api.version;
+    var sType = api.systemType;
+    var sVer = api.systemVersion;
+    var id = api.deviceId;
+    var model = api.deviceModel;
+    var name = api.deviceName;
+    var cType = api.connectionType;
+    var winName = api.winName;
+    var winWidth = api.winWidth;
+    var winHeight = api.winHeight;
+    var frameName = api.frameName || '';
+    var frameWidth = api.frameWidth || '';
+    var frameHeight = api.frameHeight || '';
+
+    var str = '<ul>';
+    str += '<li>引擎版本信息: ' + ver + '</li>';
+    str += '<li>系统类型: ' + sType + '</li>';
+    str += '<li>系统版本: ' + sVer + '</li>';
+    str += '<li>设备标识: ' + id + '</li>';
+    str += '<li>设备型号: ' + model + '</li>';
+    str += '<li>设备名称: ' + name + '</li>';
+    str += '<li>网络状态: ' + cType + '</li>';
+    str += '<li>主窗口名字: ' + winName + '</li>';
+    str += '<li>主窗口宽度: ' + winWidth + '</li>';
+    str += '<li>主窗口高度: ' + winHeight + '</li>';
+    str += '<li>子窗口名字: ' + frameName + '</li>';
+    str += '<li>子窗口宽度: ' + frameWidth + '</li>';
+    str += '<li>子窗口高度: ' + frameHeight + '</li>';
+    str += '</ul>';
+
+    $api.byId('sys-info').innerHTML = str;
+
+    var params={
+        fields:{},
+        where: {
+
+        },
+        skip:0,
+        limit:30
+    }
+    params=$api.jsonToStr(params);
+    console.log(params,'params')
+    api.ajax({
+        url: 'https://d.apicloud.com/mcm/api/lc_class?filter='+params,
+        method: 'get',
+        headers: {
+          "X-APICloud-AppId": "A6018338664263",
+          "X-APICloud-AppKey": appKey
+        }
+    },function(ret, err){
+        if (ret) {
+          application.dataList=ret;
+          application.status=false;//关闭提示
+          application.msg="通过apiready加载进去";
+          console.log(application.msg,'获取到的数据');
+        } else {
+          alert( JSON.stringify( err ) );
+        }
+    });
+
+  };
+var application =  new Vue({
+    el:'#app',
+    data:{
+      status:true,
+      msg:'没有执行apiready时显示此提示',
+      dataList:[{
+        classname:'第一章'
+      }]
+    },
+    methods:{
+      getDataList:function(){
+        this.msg="我已经成功运行vue";
+      }
+    },
+    mounted:function(){
+      this.getDataList();
+    }
+})
+</script>
+
+</html>
